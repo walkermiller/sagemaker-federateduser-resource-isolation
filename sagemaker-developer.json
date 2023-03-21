@@ -23,7 +23,6 @@
 				"sagemaker:List*"
 			],
 			"Resource": "*",
-			,
 			"Condition": {
 				"StringEquals": {
 					"aws:ResourceTag/user_department": "${aws:PrincipalTag/user_deparment}"
