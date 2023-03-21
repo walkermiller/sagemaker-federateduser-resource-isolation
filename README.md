@@ -1,6 +1,6 @@
 ## Summary
-Introducing two new tags to be used with resources to control individual access. For users logged into the console, their access will be determined by the tag "useremail" matching the email associated with their user information that has been  synched with the IdP. 
-For users logged into an instance of SageMaker Studio, their access will be determined by the tag "userprofile" matching the [SageMaker User Profile](https://docs.aws.amazon.com/sagemaker/latest/dg/domain-user-profile.html) defined. 
+Introducing three new tags to be used with resources to control individual access. For users logged into the console, their access will be determined by the tag "user_email" matching the email associated with their user information that has been  synched with the IdP. 
+For users logged into an instance of SageMaker Studio, their access will be determined by the tag "user_profile" matching the [SageMaker User Profile](https://docs.aws.amazon.com/sagemaker/latest/dg/domain-user-profile.html) defined. 
 
 Since console, or cli users will be limited to the SageMaker User Profiles they are granted access to with the "username" tag, they will then be limited to the resources with the appropriate "userprofile" tag when logged into SageMaker. 
 
@@ -27,10 +27,13 @@ For an existing domain
 ```
 aws sagemaker list-domains
 ```
-Pick the appropriate domain listed and set is as the sagemakerDomain below. 
+Pick the appropriate domain listed and set is as the sagemakerDomain below. Also, include the department Id of the group that will be utilizing the execution policy. 
+The domain and the departmentId could be the same value potentially. 
 ```
 export sagemakerDomain=
-aws iam create-role --role-name ${sagemakerDomain}SagemakerExecutionRole --assume-role-policy-document file://sagemaker-execution-role-trust-policy.json
+export departmentId=
+
+aws iam create-role --role-name ${sagemakerDomain}SagemakerExecutionRole --assume-role-policy-document file://sagemaker-execution-role-trust-policy.json --tags "Key=user_department,Value=$departmentId"
 policyArn=`aws iam create-policy --policy-name ${sageMakerDomain}SagemakerExecutionPolicy --policy-document file://sagemaker-execution-role-policy.json | jq -r .Policy.Arn`
 aws iam attach-role-policy --role-name ${sagemakerDomain}SagemakerExecutionRole --policy-arn ${policyArn}
 ```

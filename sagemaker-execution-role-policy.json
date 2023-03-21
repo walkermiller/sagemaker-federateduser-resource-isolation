@@ -13,7 +13,7 @@
             "Resource": "arn:aws:s3:::*",
             "Condition": {
                 "StringEqualsIgnoreCase": {
-                    "secretsmanager:ResourceTag/userprofile": "${aws:SourceIdentity}"
+                    "secretsmanager:ResourceTag/user_profile": "${aws:SourceIdentity}"
                 }
             }
         },
@@ -26,7 +26,7 @@
             "Resource": "arn:aws:secretsmanager::587970888371:secret:*",
             "Condition": {
                 "StringEqualsIgnoreCase": {
-                    "secretsmanager:ResourceTag/userprofile": "${aws:SourceIdentity}"
+                    "secretsmanager:ResourceTag/user_profile": "${aws:SourceIdentity}"
                 }
             }
         },
@@ -37,7 +37,7 @@
             "Resource": "*",
             "Condition": {
                 "StringEqualsIgnoreCase": {
-                    "secretsmanager:ResourceTag/userprofile": "${aws:SourceIdentity}"
+                    "secretsmanager:ResourceTag/user_profile": "${aws:SourceIdentity}"
                 }
             }
         }

@@ -30,10 +30,13 @@
 			"Action": [
 				"iam:PassRole"
 			],
-			"Resource": "arn:aws:iam::587970888371:role/service-role/AmazonSageMaker-ExecutionRole-20230307T135316",
+			"Resource": "arn:aws:iam:::role/service-role/*",
 			"Condition": {
 				"StringEquals": {
 					"iam:PassedToService": "sagemaker.amazonaws.com"
+				},
+				"StringEqualsIgnoreCase": {
+					"aws:ResourceTag/user_department": "${aws:PrincipalTag/user_department}"
 				}
 			}
 		},
@@ -79,7 +82,12 @@
 				"s3:ListBucket",
 				"s3:ListAllMyBuckets"
 			],
-			"Resource": "*"
+			"Resource": "*",
+			"Condition": {
+				"StringEquals": {
+					"aws:ResourceTag/user_email": "${aws:PrincipalTag/user_email}"
+				}
+			}
 		},
 		{
 			"Sid": "AmazonSageMakerCRUDAccessS3Policy",
@@ -93,7 +101,12 @@
 				"s3:GetBucketCORS",
 				"s3:GetBucketLocation"
 			],
-			"Resource": "arn:aws:s3:::sagemaker-crud-access/${aws:PrincipalTag/employeeid}/*"
+			"Resource": "arn:aws:s3:::*",
+			"Condition": {
+				"StringEquals": {
+					"aws:ResourceTag/user_email": "${aws:PrincipalTag/user_email}"
+				}
+			}
 		},
 		{
 			"Sid": "AmazonSageMakerReadOnlyAccessKMSPolicy",
@@ -102,7 +115,12 @@
 				"kms:DescribeKey",
 				"kms:ListAliases"
 			],
-			"Resource": "*"
+			"Resource": "*",
+			"Condition": {
+				"StringEquals": {
+					"aws:ResourceTag/user_email": "${aws:PrincipalTag/user_email}"
+				}
+			}
 		},
 		{
 			"Sid": "AmazonSageMakerCRUDAccessECRPolicy",
