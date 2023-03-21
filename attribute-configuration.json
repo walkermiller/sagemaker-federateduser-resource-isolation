@@ -1,0 +1,22 @@
+{
+    "InstanceAccessControlAttributeConfiguration": {
+        "AccessControlAttributes": [
+            {
+                "Key": "user_email",
+                "Value": {
+                    "Source": [
+                        "${path:userName}"
+                    ]
+                }
+            },
+            {
+                "Key": "user_department",
+                "Value": {
+                    "Source": [
+                        "${path:enterprise.department}"
+                    ]
+                }
+            }
+        ]
+    }
+}

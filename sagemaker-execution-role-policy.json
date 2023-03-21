@@ -1,0 +1,45 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:DeleteObject"
+            ],
+            "Resource": "arn:aws:s3:::*",
+            "Condition": {
+                "StringEqualsIgnoreCase": {
+                    "secretsmanager:ResourceTag/userprofile": "${aws:SourceIdentity}"
+                }
+            }
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:*"
+            ],
+            "Resource": "arn:aws:secretsmanager::587970888371:secret:*",
+            "Condition": {
+                "StringEqualsIgnoreCase": {
+                    "secretsmanager:ResourceTag/userprofile": "${aws:SourceIdentity}"
+                }
+            }
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": "secretsmanager:GetRandomPassword",
+            "Resource": "*",
+            "Condition": {
+                "StringEqualsIgnoreCase": {
+                    "secretsmanager:ResourceTag/userprofile": "${aws:SourceIdentity}"
+                }
+            }
+        }
+    ]
+}
