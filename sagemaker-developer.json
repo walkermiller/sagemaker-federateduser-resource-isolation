@@ -22,7 +22,13 @@
 				"sagemaker:Get*",
 				"sagemaker:List*"
 			],
-			"Resource": "*"
+			"Resource": "*",
+			,
+			"Condition": {
+				"StringEquals": {
+					"aws:ResourceTag/user_department": "${aws:PrincipalTag/user_deparment}"
+				}
+			}
 		},
 		{
 			"Sid": "AmazonSageMakerStudioIAMPassRole",
