@@ -15,7 +15,7 @@ aws sso-admin create-permission-set --name sagemaker-developer-test --instance-a
 aws sso-admin put-inline-policy-to-permission-set  --$InstanceArn --permission-set-arn --cli-imput-json
 ```
 **Note**  
-The attribute configuration is setting two attributes that will be passed as attribute tags to the active session: user_name and user_department. The later is not used in the following examples, but can be used when you want to restrict access to anyone in a particular group. For instance, you may want to add another rule in the sagmaker-developer permission set that allows anyone within a department to access any secrets that are tagged ```user_deparment=${aws:PrincipalTag/user_email}```
+The attribute configuration is setting two attributes that will be passed as attribute tags to the active session: user_name and user_department. The later is used to restrict access to use an execution role.  You can then have one execution role and domain per department.  ```user_deparment=${aws:PrincipalTag/user_email}```
 
 
 ## In the SageMaker Account
